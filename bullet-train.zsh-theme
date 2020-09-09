@@ -32,6 +32,7 @@ if [ ! -n "${BULLETTRAIN_PROMPT_ORDER+1}" ]; then
     go
     rust
     elixir
+    conda
     git
     hg
     cmd_exec_time
@@ -584,6 +585,15 @@ prompt_virtualenv() {
   fi
 }
 
+# Conda: current Anaconda environment
+# Adapted from https://github.com/caiogondim/bullet-train.zsh/issues/282#issuecomment-516266791,
+# but made faster.
+prompt_conda() {
+  if [[ ! $CONDA_DEFAULT_ENV == 'base' ]]; then
+    prompt_segment $BULLETTRAIN_VIRTUALENV_BG $BULLETTRAIN_VIRTUALENV_FG $BULLETTRAIN_VIRTUALENV_PREFIX" $CONDA_DEFAULT_ENV"
+  fi
+}
+
 # NVM: Node version manager
 prompt_nvm() {
   local nvm_prompt
@@ -599,7 +609,7 @@ prompt_nvm() {
   prompt_segment $BULLETTRAIN_NVM_BG $BULLETTRAIN_NVM_FG $BULLETTRAIN_NVM_PREFIX$nvm_prompt
 }
 
-#AWS Profile
+# AWS Profile
 prompt_aws() {
   local spaces="  "
 
